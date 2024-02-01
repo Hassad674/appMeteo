@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import * as Location from "expo-location";
 
 export default function App() {
@@ -44,7 +44,18 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>{text}</Text>
+      {weather && (
+        <>
+          <Text style={styles.totoText}>{weather.name}</Text>
+          <Text>{weather.main.temp} °C</Text>
+          <Text>{weather.weather[0].description}</Text>
+          <Image
+            style={styles.totoImage}
+            source={{ uri: "https://openweathermap.org/img/wn/10d@2x.png" }}
+          />
+        </>
+      )}
+      {!weather && <Text>{text}</Text>}
     </View>
   );
 }
@@ -55,5 +66,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  totoText: {
+    fontWeight: "bold",
+  },
+
+  totoImage: {
+    height: 100,
+    width: 100,
   },
 });
